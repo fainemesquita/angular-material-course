@@ -5,14 +5,14 @@
     <mat-card-title>{{course.description}}</mat-card-title>
   </mat-card-header>
 
-  <img mat-card-image src="course.id.iconUrl">
+  <img mat-card-image [src]="course.iconUrl">
 
   <mat-card-content>
     <p>{{course.longDescription}}</p>
   </mat-card-content>
 
   <mat-card-actions class="course-actions">
-    <button mat-raised-button color="primary" routerLink="['courses', course.id]">View Course</button>
+    <button mat-raised-button color="primary" [routerLink]="['courses', course.id]">View Course</button>
     <button mat-raised-button color="accent" (click)="editCourse(course)">Edit Course</button>
   </mat-card-actions>
 </mat-card>
