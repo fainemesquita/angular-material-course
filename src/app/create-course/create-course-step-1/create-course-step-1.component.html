@@ -2,12 +2,12 @@
 
   <mat-form-field floatLabel="always">
     <input matInput placeholder="Course title" formControlName="title" #title>
+
+    <mat-hint align="end">{{title.value.length}} / 60</mat-hint>
+
+    <mat-error *ngIf="courseTitle.errors?.minlength">A minimum lenght of 5 characters is required.</mat-error>
   </mat-form-field>
 
-  <mat-hint align="end">{{title.value.length}} / 60</mat-hint>
-
-  <mat-error *ngIf="courseTitle.errors?.minlength">A minimum lenght of 5 characters is required.</mat-error>
-  
 </div>
 
 
