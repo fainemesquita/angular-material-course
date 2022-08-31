@@ -2,12 +2,31 @@
 
   <mat-form-field floatLabel="always">
     <input matInput placeholder="Course title" formControlName="title" #title>
-
     <mat-hint align="end">{{title.value.length}} / 60</mat-hint>
-
     <mat-error *ngIf="courseTitle.errors?.minlength">A minimum lenght of 5 characters is required.</mat-error>
   </mat-form-field>
 
+  <mat-radio-group class="course-type" formControlName="courseType">
+    <mat-radio-button value="free">Free</mat-radio-button>
+    <mat-radio-button value="premium">Premium</mat-radio-button>
+  </mat-radio-group>
+
+  <mat-form-field>
+    <mat-select formControlName="category" placeholder="Select category">
+      <mat-option>None</mat-option>
+
+      <mat-optgroup label="Beginners">
+        <mat-option value="newprogramming">New to programming</mat-option>
+        <mat-option value="newjs">New to JS</mat-option>
+        <mat-option value="newangular">New to Angular</mat-option>
+      </mat-optgroup>
+
+      <mat-option value="intermediate">Intermediate</mat-option>
+      <mat-option value="advanced">Advanced</mat-option>
+      
+    </mat-select>
+
+  </mat-form-field>
 </div>
 
 
