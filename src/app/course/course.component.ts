@@ -17,7 +17,7 @@ import { Lesson } from '../model/lesson';
 })
 export class CourseComponent implements OnInit, AfterViewInit {
 
-     course:Course;
+    course:Course;
 
     lessons: Lesson[] = [];
 
@@ -25,6 +25,9 @@ export class CourseComponent implements OnInit, AfterViewInit {
 
     // loading: boolean = false; 
     //when the value is specified there's no need to indicate the type (boolean)
+
+    @ViewChild(MatSort)
+    sort: MatSort;
 
     @ViewChild(MatPaginator)
     paginator: MatPaginator;
@@ -48,9 +51,10 @@ export class CourseComponent implements OnInit, AfterViewInit {
       this.loading = true;
       this.coursesService.findLessons(
         this.course.id, 
-        "asc", 
+        this.sort?.direction ?? "asc", 
         this.paginator?.pageIndex ?? 0,
-        this.paginator?.pageSize ?? 3
+        this.paginator?.pageSize ?? 3,
+        this.sort.active ?? "seqNo"
       )
       .pipe(
         tap(lessons => this.lessons = lessons),
@@ -66,7 +70,14 @@ export class CourseComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-      this.paginator.page
+
+      this.sort.sortChange.subscribe(()=> this.paginator.pageIndex = 0) 
+      //whenever the sort is used, takes back to the first page
+
+      
+      merge(this.sort.sortChange, this.paginator.page) 
+      //merge: whenever either of the events occurs, a new Page of lessons is going to be loaded 
+
       .pipe(
         tap(() => this.loadLessonsPage())
     )
