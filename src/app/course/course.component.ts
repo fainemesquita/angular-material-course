@@ -49,7 +49,7 @@ export class CourseComponent implements OnInit, AfterViewInit {
       this.coursesService.findLessons(
         this.course.id, 
         "asc", 
-        this.paginator?.pageIndex ?? 0, 
+        this.paginator?.pageIndex ?? 0,
         this.paginator?.pageSize ?? 3
       )
       .pipe(
@@ -68,9 +68,9 @@ export class CourseComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
       this.paginator.page
       .pipe(
-        tap(()=> this.loadLessonsPage)
-      )
-      .subscribe();
+        tap(() => this.loadLessonsPage())
+    )
+    .subscribe();
 
     }
 
