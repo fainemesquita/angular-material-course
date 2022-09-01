@@ -23,14 +23,15 @@ export class CourseComponent implements OnInit, AfterViewInit {
 
     loading = false;
 
-    // loading: boolean = false; 
+    //loading: boolean = false; 
     //when the value is specified there's no need to indicate the type (boolean)
 
-    @ViewChild(MatSort)
-    sort: MatSort;
 
     @ViewChild(MatPaginator)
     paginator: MatPaginator;
+
+    @ViewChild(MatSort)
+    sort: MatSort;
 
     constructor(private route: ActivatedRoute,
                 private coursesService: CoursesService) {
@@ -51,7 +52,7 @@ export class CourseComponent implements OnInit, AfterViewInit {
       this.loading = true;
       this.coursesService.findLessons(
         this.course.id, 
-        this.sort?.direction ?? "asc", 
+        this.sort?.direction ?? "asc",
         this.paginator?.pageIndex ?? 0,
         this.paginator?.pageSize ?? 3,
         this.sort.active ?? "seqNo"
@@ -71,18 +72,15 @@ export class CourseComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
 
-      this.sort.sortChange.subscribe(()=> this.paginator.pageIndex = 0) 
-      //whenever the sort is used, takes back to the first page
-
-      
-      merge(this.sort.sortChange, this.paginator.page) 
+      this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0); //whenever the sort is used, takes back to the first page
       //merge: whenever either of the events occurs, a new Page of lessons is going to be loaded 
+      merge(this.sort.sortChange, this.paginator.page)
+          .pipe(
+              tap(() => this.loadLessonsPage())
+          )
+          .subscribe();
 
-      .pipe(
-        tap(() => this.loadLessonsPage())
-    )
-    .subscribe();
+  }
 
-    }
 
 }
