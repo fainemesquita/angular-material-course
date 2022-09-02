@@ -38,7 +38,9 @@ export class CourseComponent implements OnInit, AfterViewInit {
 
     }
 
-    displayedColumns = ['seqNo', 'description', 'duration']
+    displayedColumns = ['seqNo', 'description', 'duration'];
+
+    expandedLesson: Lesson = null
 
     ngOnInit() {
 
@@ -68,6 +70,15 @@ export class CourseComponent implements OnInit, AfterViewInit {
         finalize(() => this.loading = false)
     )
     .subscribe();
+    }
+
+    onToggleLesson(lesson:Lesson) {
+      if (lesson == this.expandedLesson) {
+        this.expandedLesson = null
+      }
+      else {
+        this.expandedLesson = lesson;
+      }
     }
 
     ngAfterViewInit() {
