@@ -15,7 +15,7 @@ export class CoursesCardListComponent implements OnInit {
 
     cols = 3;
     rowHeight = 500;
-    handsetPortrait: boolean
+    handsetPortrait: boolean;
 
     constructor(private dialog: MatDialog,
         private responsive: BreakpointObserver) {
